@@ -1,0 +1,71 @@
+from tkinter import *
+
+# Запускаю окно, задаю его размеры и название
+window = Tk()
+window.geometry('700x500')
+window.title('Тест')
+
+
+# вывел на экран в окне заголовок
+label_title = Label(
+    text='Правда или ложь!',
+    font=('Arial', 24),
+    fg='white',
+    bg='blue',
+    justify=CENTER
+)
+label_title.pack()
+
+
+# список утверждений
+facts = [
+    {'text':'2 + 2 = 4', 'right': 1},
+    {'text':'Вода при замерзании увеличивается в объёме', 'right': 1},
+    {'text':'Воздух состоит на 99% из азота', 'right': 0},
+    {'text':'Капибара является самым большим из живущих ныне грызунов', 'right': 1},
+    {'text':'Горячая вода может замерзать быстрее холодной', 'right': 1},
+    {'text':'1 килограм гвоздей весит столько же сколько 1 килограмм ваты', 'right': 1},
+    {'text':'У осьминога 6 сердец', 'right': 0},
+    {'text':'Эверест - самая высока гора солнечной системы', 'right': 0},
+    {'text':'Эйфелева башня 600м в высоту', 'right': 0},
+    {'text':'Боязнь пауков называется арахнофобией', 'right': 1}
+]
+cur_quest = 0
+points = 0
+
+# Вывод набранных очков
+def check():
+    global cur_quest, points
+    answer = var.get()
+    if bool(answer) == facts[cur_quest]['right']:
+        points += 1
+    if cur_quest < len(facts) - 1:
+        cur_quest += 1
+        fact['text'] = facts[cur_quest]['text']
+    else:
+        points_label = Label(text=f'Набрано очков: {points}',font=('Arial, 34'),fg='blue', bg='white')
+        points_label.place(x=0, y=0, width=700, height=250)
+
+
+
+# Вывели вопрос на экран
+fact = Message(
+    text=facts[cur_quest]['text'],
+    font=('Arial', 18),
+    width=680
+)
+fact.place(x=10, y=70)
+
+var = IntVar()
+
+true = Radiobutton(text='Правда', variable=var,value=1)
+true.place(x=10, y=170)
+
+false = Radiobutton(text='Ложь', variable=var,value=0)
+false.place(x=10, y=230)
+
+#Кнопка 'ответить'
+b = Button(text='Ответить', font=('Arial'), fg='Black',command=check)
+b.place(x=200, y=185)
+
+window.mainloop()
